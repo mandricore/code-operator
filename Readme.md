@@ -31,6 +31,7 @@ This library was created using the guides:
 - [babel handbook](https://github.com/thejameskyle/babel-handbook/blob/master/translations/en/user-handbook.md)
 - [webpack testing](https://webpack.github.io/docs/testing.html)
 - [mocha-webpack](https://www.npmjs.com/package/mocha-webpack)
+- [es7-decorators-babel6](http://technologyadvice.github.io/es7-decorators-babel6/)
 
 ### Libs used
 
@@ -38,6 +39,11 @@ This library was created using the guides:
 - [babel-loader](https://github.com/babel/babel-loader)
 - [babel-preset-latest-minimal](https://www.npmjs.com/package/babel-preset-latest-minimal)
 - [npm-install-webpack-plugin](https://www.npmjs.com/package/npm-install-webpack-plugin)
+
+### Decorator
+
+- [lodash-decorators](https://www.npmjs.com/package/lodash-decorators)
+- [core-decorators](https://www.npmjs.com/package/core-decorators)
 
 ### Documentation
 
@@ -63,6 +69,8 @@ List current plugins needed according to the version of node:
   'syntax-trailing-function-commas',
   'transform-async-to-generator' ]
 ```
+
+`npm i babel-plugin-transform-es2015-duplicate-keys babel-plugin-transform-es2015-modules-commonjs babel-plugin-syntax-trailing-function-commas babel-plugin-transform-async-to-generator --save-dev`
 
 ## For Vue projects
 

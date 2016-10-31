@@ -1,4 +1,10 @@
 {
-  presets: ["latest-minimal"],
-  plugins: []
+  "presets": ["latest-minimal"],
+  "plugins": [ 
+    "transform-es2015-duplicate-keys",
+    "transform-es2015-modules-commonjs",
+    "syntax-trailing-function-commas",
+    "transform-async-to-generator",
+    "transform-decorators-legacy"
+  ]
 }
