@@ -1,0 +1,22 @@
+{
+  "name": "code-operator-js",
+  "version": "1.0.0",
+  "description": "Code operator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "code",
+    "operator"
+  ],
+  "author": "Kristian Mandrup",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.18.0",
+    "babel-loader": "^6.2.7",
+    "babel-preset-latest-minimal": "^1.1.2",
+    "easy-coveralls": "0.0.1",
+    "webpack": "^2.1.0-beta.25"
+  }
+}
