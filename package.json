@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "mocha:test": "mocha-webpack --webpack-config build/webpack.test.config.js \"src/**/*.test.js\"",
-    "build:dev": "webpack --config build/webpack.dev.config.js"
+    "build:dev": "webpack --config build/webpack.dev.config.js",
+    "cover:report": "npm-run plato -r -d report src",
+    "cover:report:display": "open report/index.html"
   },
   "keywords": [
     "code",
@@ -26,6 +28,7 @@
     "lodash.merge": "^4.6.0",
     "mocha": "^3.1.2",
     "mocha-webpack": "^0.7.0",
+    "plato": "^1.7.0",
     "webpack": "^2.1.0-beta.25",
     "webpack-node-externals": "^1.5.4"
   },
