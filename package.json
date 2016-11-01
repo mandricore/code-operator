@@ -7,7 +7,7 @@
   "scripts": {
     "mocha:test": "npm run lint & mocha-webpack --opts test/config/mocha/mocha-webpack.opts",
     "test:watch": "mocha-webpack --opts test/config/mocha/mocha-webpack.opts --watch",
-    "test": "npm run mocha:test",
+    "test": "npm run mocha:test --silent",
     "build:dev": "webpack --config build/webpack.dev.config.js",
     "cover:report": "npm-run plato -r -d report src",
     "cover:report:display": "open report/index.html",
