@@ -1,12 +1,3 @@
-class CodeOperator {
-  constructor(opts = {}) {
-    this.opts = opts;
-  }
+const operator = require('./operator')
 
-  delete() {
-  }
-}
-
-module.exports = () => {
-  return new CodeOperator(opts);
-}
+module.exports = operator
