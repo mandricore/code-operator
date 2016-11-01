@@ -1,5 +1,5 @@
 {
-  "presets": ["latest-minimal", { "modules": false }],
+  "presets": ["latest-minimal"],
   "plugins": [ 
     "transform-es2015-duplicate-keys",
     "transform-es2015-modules-commonjs",

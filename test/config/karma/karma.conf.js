@@ -1,0 +1,50 @@
+config.set({
+    …
+    files: [
+        'test/index.js'
+    ],
+    preprocessors: {
+        'test/index.js': 'webpack'
+    },
+    webpack: {
+        // *optional* babel options: isparta will use it as well as babel-loader
+        babel: {
+            presets: ['es2015', 'stage-0', 'react']
+        },
+        // *optional* isparta options: istanbul behind isparta will use it
+        isparta: {
+            embedSource: true,
+            noAutoWrap: true,
+            // these babel options will be passed only to isparta and not to babel-loader
+            babel: {
+                presets: ['es2015', 'stage-0', 'react']
+            }
+        },
+        …
+        module: {
+            preLoaders: [
+                // transpile all files except testing sources with babel as usual
+                {
+                    test: /\.js$/,
+                    exclude: [
+                        path.resolve('src/components/'),
+                        path.resolve('node_modules/')
+                    ],
+                    loader: 'babel'
+                },
+                // transpile and instrument only testing sources with isparta
+                {
+                    test: /\.js$/,
+                    include: path.resolve('src/components/'),
+                    loader: 'isparta'
+                }
+            ]
+        }
+        …
+    },
+    reporters: [ 'progress', 'coverage' ],
+    coverageReporter: {
+        type: 'text'
+    },
+    …
+});

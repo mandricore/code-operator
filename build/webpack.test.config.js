@@ -1,5 +1,7 @@
 const { base, merge } = require('./webpack.base.config')
 
-module.exports = merge(base, {
-
+const test = merge(base, {
+  devtool: 'cheap-module-eval-source-map'
 })
+
+module.exports = test

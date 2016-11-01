@@ -1,3 +1,5 @@
+[![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+
 # Code Operator
 
 Utility to make efficient code operations using the Javascript AST.
@@ -49,6 +51,10 @@ This library was created using the guides:
 
 - [documentation.js](https://github.com/documentationjs/documentation)
 
+### Karma
+
+- [karma-mocha-reporter](https://www.npmjs.com/package/karma-mocha-reporter)
+
 ### Flowtype
 
 - [flowtype](https://flowtype.org/)
@@ -56,6 +62,26 @@ This library was created using the guides:
 ### Plato reports
 
 `npm-run plato -r -d reports ./`
+
+### Code style
+
+- [xo](https://github.com/sindresorhus/xo)
+- [standard](http://standardjs.com/) - javascript standard code style
+
+`eslint --init` to configure and initialize ESlint
+
+```json
+{
+    "extends": "standard",
+    "installedESLint": true,
+    "plugins": [
+        "standard",
+        "promise"
+    ]
+}
+```
+
+- [eslint-and-mocha](https://robots.thoughtbot.com/testing-your-style-with-eslint-and-mocha)
 
 ### Babel plugins
 

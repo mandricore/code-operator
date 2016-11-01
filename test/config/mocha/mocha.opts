@@ -1,0 +1,9 @@
+--bail
+--check-leaks
+--reporter spec
+--ui bdd
+--colors
+--compilers js:babel-core/register
+--require source-map-support/register
+--webpack-config build/webpack.test.config.js
+src/{**/,/}*.test.js
