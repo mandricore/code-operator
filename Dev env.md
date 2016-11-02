@@ -1,26 +1,57 @@
-[![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+## Dev environment 2016-2017
 
-# Code Operator
+## Style guide linter
 
-Utility to make efficient code operations using the Javascript AST.
-Toolset:
+- linting: [xo](https://github.com/sindresorhus/xo) using [eslint]()
+- testing: [ava](https://github.com/ava/ava)
+- BDD: [ava-spec]()
+- test doubles: [testdouble.js]()
+- browser testing: [browser-env]()
+- code coverage: [nyc](https://github.com/istanbuljs/nyc) with [coveralls.io](https://www.npmjs.com/package/coveralls)
+- E2E: [cypress] or [nightwatch]
+- Bundling [webpack]()
+- Complexity analysis [plato]
+- 
 
-- [estools](https://github.com/estools)
+## Recipe
 
-- [esprima](https://github.com/jquery/esprima)
-- [escode](https://github.com/estools/escodegen) - code generator
+For ava tips, read [this recipe](https://github.com/kentcdodds/react-ava-workshop)
 
-- [estraverse](https://www.npmjs.com/package/estraverse)
-- [merge-estraverse-visitors](https://www.npmjs.com/package/merge-estraverse-visitors)
+`yarn i babel-cli -g`
 
-- [esquery](https://github.com/estools/esquery)
-- [esdispatch](https://github.com/estools/esdispatch)
+*create package*
+- `yarn init`
 
-- [escope](https://github.com/estools/escope)
-- [esutils](https://github.com/estools/esutils)
-- [estemplate](https://github.com/estools/estemplate) - templating using AST
-- [esvalid](https://github.com/estools/esvalid)
+*babel*
+- `yarn add babel-register babel-polyfill babel-plugin-transform-runtime --D`
+- `yarn add babel-preset-latest-minimal --save-dev`
 
+*webpack*
+- `yarn add webpack webpack-node-externals --D`
+
+*testing*
+- `yarn add ava ava-spec testdouble --D`
+
+*coverage*
+- `yarn add nyc coveralls --D`
+
+*lint styleing*
+- `yarn add xo  --D`
+
+*complexity analysis*
+- `yarn add plato --D`
+
+*browser testing (for modules used in web apps only)*
+`yarn i add browser-env --D`
+
+*CI*
+
+`.travis.yml`
+
+```
+after_success:
+    - './node_modules/.bin/nyc report --reporter=text-lcov | ./node_modules/.bin/coveralls'
+```
 ## Tools of the trade
 
 This library was created using the guides:
@@ -32,7 +63,6 @@ This library was created using the guides:
 - [code-coverage-with-instanbul-and-coveralls](http://codeheaven.io/javascript-code-coverage-with-instanbul-and-coveralls/)
 - [babel handbook](https://github.com/thejameskyle/babel-handbook/blob/master/translations/en/user-handbook.md)
 - [webpack testing](https://webpack.github.io/docs/testing.html)
-- [mocha-webpack](https://www.npmjs.com/package/mocha-webpack)
 - [es7-decorators-babel6](http://technologyadvice.github.io/es7-decorators-babel6/)
 
 ### Libs used
@@ -42,6 +72,8 @@ This library was created using the guides:
 - [npm-install-webpack-plugin](https://www.npmjs.com/package/npm-install-webpack-plugin)
 
 ### Testing
+
+- [test double vs sinon](http://blog.testdouble.com/posts/2016-03-13-testdouble-vs-sinon.html)
 
 - [debugging-mocha-unit-tests-in-visual-studio-code](https://scottaddie.com/2015/10/22/debugging-mocha-unit-tests-in-visual-studio-code/)
 
@@ -54,7 +86,7 @@ Configure `.launch.json` file in root with this host and port.
 
 ### Code coverage
 
-Use [cross-env](https://www.npmjs.com/package/cross-env) and [nyc](https://github.com/istanbuljs/nyc) interface 
+Use [cross-env](https://www.npmjs.com/package/cross-env) and [nyc](https://github.com/istanbuljs/nyc) interface
 
 `npm i nyc --save-dev`
 

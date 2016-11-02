@@ -1,10 +1,21 @@
 {
   "presets": ["latest-minimal"],
-  "plugins": [ 
+  "plugins": [
     "transform-es2015-duplicate-keys",
     "transform-es2015-modules-commonjs",
     "syntax-trailing-function-commas",
     "transform-async-to-generator",
     "transform-decorators-legacy"
-  ]
+  ],
+  "env": {
+    "test": {
+      "plugins": [
+        ["istanbul", {
+          "exclude": [
+            "**/*.test.js"
+          ]
+        }]
+      ]
+    }
+  }
 }

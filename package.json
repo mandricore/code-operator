@@ -5,16 +5,25 @@
   "preferGlobal": false,
   "main": "dist/bundle.js",
   "scripts": {
-    "mocha:test": "npm run lint & mocha-webpack --opts test/config/mocha/mocha-webpack.opts",
-    "test:watch": "mocha-webpack --opts test/config/mocha/mocha-webpack.opts --watch",
-    "test": "npm run mocha:test --silent",
+    "mocha:lint:test": "npm run lint & mocha-webpack --opts test/config/mocha/mocha-webpack.opts",
+    "mocha:test": "mocha-webpack --opts test/config/mocha/mocha-webpack.opts",
+    "mocha:test:watch": "mocha-webpack --opts test/config/mocha/mocha-webpack.opts --watch",
+    "test": "npm run mocha:test --silent && ava",
+    "nyc:coverage": "cross-env NODE_ENV=test npm-run nyc --reporter=lcov --reporter=text --cache _mocha src/**/*.test.js",
+    "coverage": "npm run nyc:coverage --silent",
+    "instanbul:coverage": "istanbul cover node_modules/mocha/bin/_mocha src/{**/,/}*.test.js -- -R spec --require babel-core/register --compilers js:babel-core/register",
+    "insta:coverage": "istanbul cover node_modules/mocha/bin/_mocha src/**/*.test.js -- -R spec --require babel-core/register --compilers js:babel-core/register",
+    "make:coveralls": "npm run insta:coverage -- --report lcovonly && cat ./coverage/lcov.info | coveralls",
+    "precoveralls": "istanbul cover node_modules/mocha/bin/_mocha src/{**/,/}*.test.js --report lcovonly -- -R spec && npm i coveralls@2",
+    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "istanbul": "npm-run istanbul cover",
+    "plato:report": "npm-run plato -r -d report src",
+    "plato:report:display": "open report/index.html",
     "build:dev": "webpack --config build/webpack.dev.config.js",
-    "cover:report": "npm-run plato -r -d report src",
-    "cover:report:display": "open report/index.html",
-    "coveralls": "easy-coveralls -m src/index.js",
     "lint": "eslint src/**/*.js",
     "lint:fix": "eslint src/**/*.js --fix",
     "standard": "standard --fix",
+    "docs": "documentation",
     "xo": "xo src/index.js"
   },
   "keywords": [
@@ -23,6 +32,17 @@
   ],
   "xo": {
     "esnext": true
+  },
+  "nyc": {
+    "require": [
+      "babel-register"
+    ],
+    "sourceMap": false,
+    "instrument": false,
+    "extension": [
+      ".jsx",
+      ".es6"
+    ]
   },
   "engines": {
     "node": ">=6.0.0"
@@ -38,9 +58,11 @@
   "author": "Kristian Mandrup",
   "license": "MIT",
   "devDependencies": {
+    "ava": "^0.16.0",
     "babel": "^6.5.2",
     "babel-core": "^6.18.0",
     "babel-loader": "^6.2.7",
+    "babel-plugin-istanbul": "^2.0.3",
     "babel-plugin-syntax-trailing-function-commas": "^6.13.0",
     "babel-plugin-transform-async-to-generator": "^6.16.0",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
@@ -50,6 +72,7 @@
     "babel-preset-latest-minimal": "^1.1.2",
     "babel-register": "^6.18.0",
     "chai": "^3.5.0",
+    "coveralls": "^2.11.14",
     "easy-coveralls": "kristianmandrup/easy-coveralls#master",
     "eslint": "^3.9.1",
     "eslint-config-standard": "^6.2.1",
@@ -60,14 +83,17 @@
     "eslint-plugin-promise": "^3.3.0",
     "eslint-plugin-standard": "^2.0.1",
     "isparta-loader": "^2.0.0",
+    "istanbul": "^0.4.5",
     "jscs": "^3.0.7",
     "jshint": "^2.9.4",
     "karma": "^1.3.0",
     "karma-mocha-reporter": "^2.2.0",
     "lodash.merge": "^4.6.0",
     "mocha": "^3.1.2",
+    "mocha-lcov-reporter": "^1.2.0",
     "mocha-test-dsl": "^0.3.2",
     "mocha-webpack": "^0.7.0",
+    "nyc": "^8.3.2",
     "plato": "^1.7.0",
     "source-map-loader": "^0.1.5",
     "source-map-support": "^0.4.6",
