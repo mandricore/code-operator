@@ -33,6 +33,16 @@
   "xo": {
     "esnext": true
   },
+  "ava": {
+    "concurrency": 5,
+    "failFast": true,
+    "tap": true,
+    "powerAssert": false,
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit"
+  },
   "nyc": {
     "require": [
       "babel-register"
