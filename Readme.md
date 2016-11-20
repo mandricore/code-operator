@@ -21,6 +21,51 @@ Toolset:
 - [estemplate](https://github.com/estools/estemplate) - templating using AST
 - [esvalid](https://github.com/estools/esvalid)
 
+## Grasp - refactorind code
+
+[use as library](http://www.graspjs.com/docs/lib/)
+[code replacement](http://www.graspjs.com/docs/replace/)
+[squery](http://www.graspjs.com/docs/squery/)
+[equery](http://www.graspjs.com/docs/equery/)
+[concepts](http://www.graspjs.com/docs/concepts/)
+
+```js
+var grasp = require('grasp');
+var replacer = grasp.replace('equery', '__ + __', '{{.l}} - {{.r}}');
+var processedCode = replacer(code);
+```
+
+### Search
+
+search takes a string choosing a query engine (squery or equery), a string selector, and a string input, and produces an array of nodes. Eg.
+
+```js
+var grasp = require('grasp');
+var nodes = grasp.search('squery', 'if', code);
+```
+
+### Replace
+
+replace takes a string choosing a query engine (squery or equery), a string selector, a string replacement, and a string input, and produces a string of the processed code. Eg.
+
+```js
+var grasp = require('grasp');
+var processedCode = grasp.replace('squery', 'if.test', '!({{}})', code);
+```
+
+Instead of providing a replacement pattern as a string, you can pass in a function which produces a string, and this string will be used as the replacement.
+
+```js
+var processedCode = grasp.replace('squery', 'call[callee=#require]', function(getRaw, node, query) {
+    var req = query(".args")[0];
+    return "import " + camelize(path.basename(req.value, ".js")) + " from " + getRaw(req);
+}, code);
+```
+
+## Tutorials
+
+[esprima tutorial](http://sevinf.github.io/blog/2012/09/29/esprima-tutorial/)
+
 ## Tools of the trade
 
 This library was created using the guides:
@@ -54,7 +99,7 @@ Configure `.launch.json` file in root with this host and port.
 
 ### Code coverage
 
-Use [cross-env](https://www.npmjs.com/package/cross-env) and [nyc](https://github.com/istanbuljs/nyc) interface 
+Use [cross-env](https://www.npmjs.com/package/cross-env) and [nyc](https://github.com/istanbuljs/nyc) interface
 
 `npm i nyc --save-dev`
 
