@@ -1,6 +1,6 @@
 // import { expect } from 'chai'
 import test from 'ava'
-import code from './code'
+import asterize from './asterize'
 // import test from 'mocha-test-dsl'
 
 // test('Operator: code')
@@ -11,6 +11,6 @@ import code from './code'
 //   })
 //   .run()
 
-test('hello', t => {
+test('asterize', t => {
   t.true(true)
 })

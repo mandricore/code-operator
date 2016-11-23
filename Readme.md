@@ -156,6 +156,25 @@ aster.src('src/**/*.js')
 .subscribe(aster.runner);
 ```
 
+You can also use a custom [Observable](http://reactivex.io/documentation/observable.html) to feed `aster.src`
+
+```js
+function srcObserver(options) {
+  return Rx.Observable.of(options.sources);
+}
+
+const sources = ['var a = 1', 'var b = a + 2']
+
+// alternatively:
+// const srcObserver = Rx.Observable.of(options.sources);
+
+aster.src({
+  srcObserver,
+  sources,
+})
+```
+
+
 [Aster](https://github.com/asterjs/aster) sure looks like the best option!
 
 Only problem is that aster is currently outdated, but likely just by updating
