@@ -174,6 +174,10 @@ aster.src({
 })
 ```
 
+- [aster.runner](https://github.com/kristianmandrup/aster-runner/blob/master/index.js)
+- [aster.dest](https://github.com/kristianmandrup/aster-dest/blob/master/index.js)
+- [aster generate](https://github.com/kristianmandrup/aster-generate/blob/master/index.js)
+
 
 [Aster](https://github.com/asterjs/aster) sure looks like the best option!
 
