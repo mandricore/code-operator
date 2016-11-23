@@ -21,7 +21,12 @@ Toolset:
 - [estemplate](https://github.com/estools/estemplate) - templating using AST
 - [esvalid](https://github.com/estools/esvalid)
 
-## Grasp - refactorind code
+We will use [aster](https://github.com/asterjs) repos from [aster@kristianmandrup](https://github.com/kristianmandrup?utf8=%E2%9C%93&tab=repositories&q=aster)
+or when updated dependencies are merged into origins.
+
+## Grasp - refactoring code (search/replace AST)
+
+Grasp is usd internally by [aster](https://github.com/asterjs/aster) see below.
 
 [use as library](http://www.graspjs.com/docs/lib/)
 [code replacement](http://www.graspjs.com/docs/replace/)
