@@ -30,9 +30,9 @@ Toolset:
 [concepts](http://www.graspjs.com/docs/concepts/)
 
 ```js
-var grasp = require('grasp');
-var replacer = grasp.replace('equery', '__ + __', '{{.l}} - {{.r}}');
-var processedCode = replacer(code);
+const grasp = require('grasp')
+const replacer = grasp.replace('equery', '__ + __', '{{.l}} - {{.r}}')
+const processedCode = replacer(code)
 ```
 
 ### Search
@@ -40,8 +40,7 @@ var processedCode = replacer(code);
 search takes a string choosing a query engine (squery or equery), a string selector, and a string input, and produces an array of nodes. Eg.
 
 ```js
-var grasp = require('grasp');
-var nodes = grasp.search('squery', 'if', code);
+const nodes = grasp.search('squery', 'if', code);
 ```
 
 ### Replace
@@ -49,8 +48,7 @@ var nodes = grasp.search('squery', 'if', code);
 replace takes a string choosing a query engine (squery or equery), a string selector, a string replacement, and a string input, and produces a string of the processed code. Eg.
 
 ```js
-var grasp = require('grasp');
-var processedCode = grasp.replace('squery', 'if.test', '!({{}})', code);
+const processedCode = grasp.replace('squery', 'if.test', '!({{}})', code);
 ```
 
 Instead of providing a replacement pattern as a string, you can pass in a function which produces a string, and this string will be used as the replacement.
@@ -61,6 +59,103 @@ var processedCode = grasp.replace('squery', 'call[callee=#require]', function(ge
     return "import " + camelize(path.basename(req.value, ".js")) + " from " + getRaw(req);
 }, code);
 ```
+
+## Esquery (Example query)
+
+`if(__){ __ }` matches any if statement with any test, and one statement in its body.
+`function __(__) { __ }` matches a function with any name, one parameter of any identifier, and a body with one statement.
+
+You can also give the wildcard a name which can be used to refer to it during replacement.
+`$name` will match any expression, statement, or identifier, and during replacement the matched node can be
+accessed using its name, eg. `{{name}}`. If you use a name more than once, then the values for both must match
+- eg. `$a + $a` will match `2 + 2`, but not `2 + 1`.
+
+You can use `_$`, which matches zero or more elements. Modifying our previous example,
+`function __(_$) { _$ }` matches a function with any name, any amount of parameters, and any amount of statements.
+
+### Replace
+
+First, the text `{{}}` will be replaced with the source of the matched node.
+
+For instance, the replacement text `f({{}})` would result in each match being replaced with a call to the function `f` with the match as its argument.
+
+```
+$ cat file.js
+if (y < 2) {
+  window.x = y + z;
+}
+$ grasp '[left=#y]' --replace 'f({{}})' file.js
+if (f(y < 2)) {
+  window.x = f(y + z);
+}
+```
+
+Second, the text `{{selector}}` will be replaced with the first result of querying the matched node with the specified selector.
+The query engine used to process the selector will be the same as you used for searching, eg.
+if you used equery to search for matches (with the -e, --equery flag), then the replacement selector will also use equery.
+
+An example:
+
+```
+$ cat file.js
+if (y < 2) {
+  window.x = y + z;
+}
+$ grasp if --replace 'while ({{.test}}) {\n  f(++{{assign bi.left}});\n}' file.js
+while (y < 2) {
+  f(++y);
+}
+```
+
+See [Syntax](http://www.graspjs.com/docs/syntax-js/) for full overview of Javascript syntax you can use to query AST.
+
+## Aster
+
+Perhaps better and easier to use [aster](https://github.com/asterjs)
+Even has [ES6 support](https://github.com/asterjs/aster-parse-esnext)
+
+```js
+const aster = require('aster');
+aster.src.registerParser('.js', require('aster-parse-esnext'));
+```
+
+*aster* is reactive builder specialized for code processing and transformations. It's built with debugging in mind and makes building JavaScript code more reliable and faster.
+
+[aster-equery](https://www.npmjs.com/package/aster-equery)
+
+```js
+var aster = require('aster');
+var equery = require('aster-equery');
+
+aster.src('src/**/*.js')
+.map(equery({
+  'if ($cond) return $expr1; else return $expr2;': 'return <%= cond %> ? <%= expr1 %> : <%= expr2 %>'
+  // , ...
+}))
+.map(aster.dest('dist'))
+.subscribe(aster.runner);
+```
+
+Alternatively
+
+```js
+var aster = require('aster');
+var equery = require('aster-equery');
+
+aster.src('src/**/*.js')
+.map(equery({
+  'if[then=return][else=return]': 'return <%= test %> ? <%= consequent.argument %> : <%= alternate.argument %>'
+  // , ...
+}))
+.map(aster.dest('dist'))
+.subscribe(aster.runner);
+```
+
+[Aster](https://github.com/asterjs/aster) sure looks like the best option!
+
+Only problem is that aster is currently outdated, but likely just by updating
+[dependencies](https://github.com/asterjs/aster-parse-js/blob/master/package.json) to latest esprima (`4.0.0-dev`) it should work
+for modern javascript
 
 ## Tutorials
 
