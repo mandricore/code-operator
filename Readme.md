@@ -174,12 +174,67 @@ aster.src({
 })
 ```
 
-- [aster.runner](https://github.com/kristianmandrup/aster-runner/blob/master/index.js)
-- [aster.dest](https://github.com/kristianmandrup/aster-dest/blob/master/index.js)
-- [aster generate](https://github.com/kristianmandrup/aster-generate/blob/master/index.js)
+Aster libs to be used for code transformation pipeline:
 
+- [aster runner](https://github.com/kristianmandrup/aster-runner)
+- [aster dest](https://github.com/kristianmandrup/aster-dest)
+- [aster src](https://github.com/kristianmandrup/aster-src)
+- [aster generate](https://github.com/kristianmandrup/aster-generate)
+- [aster squery](https://github.com/kristianmandrup/aster-squery)
+- [aster equery](https://github.com/kristianmandrup/aster-equery)
+- [aster traverse](https://github.com/kristianmandrup/aster-traverse)
+- [aster parse](https://github.com/kristianmandrup/aster-parse)
+- [aster parse js](https://github.com/kristianmandrup/aster-parse-js)
 
-[Aster](https://github.com/asterjs/aster) sure looks like the best option!
+Note: To remove an AST node such as a function with a specific indentifier, find it via selector and replace with an empty string!!
+
+Full customized example:
+
+```js
+function srcObserver(options) {
+  return Rx.Observable.of(options.sources);
+}
+
+const sources = ['var a = 1', 'var b = a + 2']
+
+function destinator() {
+  return function (sources) {
+    sources = options.generate(sources);
+    sources.flatMap(function (source) {
+      console.log(source)
+    }
+  }
+}
+
+function generator() {
+	return function(sources) {
+		return sources.flatMap(function (source) {
+			var result = escodegen.generate(source.program, options);
+			return Rx.Observable.fromArray(result);
+    }
+  }
+}
+
+aster.src({
+  srcObserver,
+  sources,
+})
+.map(equery({
+  'if[then=return][else=return]': 'return <%= test %> ? <%= consequent.argument %> : <%= alternate.argument %>'
+  // , ...
+}))
+.map(aster.dest({
+  generator,
+  destinator
+}))
+.subscribe(aster.runner({
+  onSuccess: (item) => {
+    console.log('success', item);
+  }
+}));
+```
+
+[Aster](https://github.com/asterjs/aster) looks like the best option!
 
 Only problem is that aster is currently outdated, but likely just by updating
 [dependencies](https://github.com/asterjs/aster-parse-js/blob/master/package.json) to latest esprima (`4.0.0-dev`) it should work
