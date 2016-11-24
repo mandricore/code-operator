@@ -117,23 +117,28 @@ See [Syntax](http://www.graspjs.com/docs/syntax-js/) for full overview of Javasc
 ## Aster
 
 Perhaps better and easier to use [aster](https://github.com/asterjs)
-Even has [ES6 support](https://github.com/asterjs/aster-parse-esnext)
+Using esprima 3 and above, it has ES6 and ES.next (including async/await) support built in :)
 
 ```js
 const aster = require('aster');
 aster.src.registerParser('.js', require('aster-parse-esnext'));
 ```
 
-*aster* is reactive builder specialized for code processing and transformations. It's built with debugging in mind and makes building JavaScript code more reliable and faster.
+*aster* is a reactive builder specialized for code processing and transformations. It's built with debugging in mind and makes building JavaScript code more reliable and faster. Aster uses RxJS Observables for its reactive pipeline infrastructure.
 
-[aster-equery](https://www.npmjs.com/package/aster-equery)
+*RxJS tutorials*
+
+- [Observable tutorial video series](https://egghead.io/lessons/rxjs-creating-an-observable)
+- [RxJs book](http://xgrommx.github.io/rx-book/index.html)
+
+*Aster equery example*
 
 ```js
 var aster = require('aster');
-var equery = require('aster-equery');
+var equery = require('aster-squery');
 
 aster.src('src/**/*.js')
-.map(equery({
+.map(squery({
   'if ($cond) return $expr1; else return $expr2;': 'return <%= cond %> ? <%= expr1 %> : <%= expr2 %>'
   // , ...
 }))
@@ -141,20 +146,24 @@ aster.src('src/**/*.js')
 .subscribe(aster.runner);
 ```
 
-Alternatively
+Alternatively using `squery`
 
 ```js
 var aster = require('aster');
-var equery = require('aster-equery');
+var squery = require('aster-squery');
 
 aster.src('src/**/*.js')
-.map(equery({
+.map(squery({
   'if[then=return][else=return]': 'return <%= test %> ? <%= consequent.argument %> : <%= alternate.argument %>'
   // , ...
 }))
 .map(aster.dest('dist'))
 .subscribe(aster.runner);
 ```
+
+To `remove` an AST node such as a function with a specific indentifier, find it via selector and replace with an empty string!!
+
+### Customized pipeline
 
 You can also use a custom [Observable](http://reactivex.io/documentation/observable.html) to feed `aster.src`
 
@@ -174,8 +183,7 @@ aster.src({
 })
 ```
 
-Aster libs to be used for code transformation pipeline:
-
+*aster* pipeline modules
 - [aster runner](https://github.com/kristianmandrup/aster-runner)
 - [aster dest](https://github.com/kristianmandrup/aster-dest)
 - [aster src](https://github.com/kristianmandrup/aster-src)
@@ -186,9 +194,7 @@ Aster libs to be used for code transformation pipeline:
 - [aster parse](https://github.com/kristianmandrup/aster-parse)
 - [aster parse js](https://github.com/kristianmandrup/aster-parse-js)
 
-Note: To remove an AST node such as a function with a specific indentifier, find it via selector and replace with an empty string!!
-
-Full customized example:
+#### Full customized pipeline example
 
 ```js
 function srcObserver(options) {
@@ -234,11 +240,7 @@ aster.src({
 }));
 ```
 
-[Aster](https://github.com/asterjs/aster) looks like the best option!
-
-Only problem is that aster is currently outdated, but likely just by updating
-[dependencies](https://github.com/asterjs/aster-parse-js/blob/master/package.json) to latest esprima (`4.0.0-dev`) it should work
-for modern javascript
+[Aster](https://github.com/asterjs/aster) sure looks like the best option!
 
 ## Tutorials
 
